@@ -1,0 +1,14 @@
+{
+  "name": "mod2_fabricio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pro-congress-113-senate.js",
+  "scripts": {
+    "dev": "live-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}
