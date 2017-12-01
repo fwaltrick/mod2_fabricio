@@ -1,11 +1,29 @@
-var html = location.pathname.split("/").slice(-1)
 
-if (html == "house.html") {
-    var jsonurl = "pro-congress-113-house.json";
-} else if (html == "senate.html") {
-    var jsonurl = "pro-congress-113-senate.json";
-}
+//Fuction to change the button of the accordion in the homepage
+$(".readMore").click(function(){
+     $(this).text(function(index, currentText) {
+         return currentText === 'Read Less' ? 'Read More' : 'Read Less';
+     });
+});
 
+// My first solution: determining the chamber by the HTML file
+//
+// var html = location.pathname.split("/").slice(-1)
+
+//  if (html == "house") {
+//      var jsonurl = "pro-congress-113-house.json";
+//  } else if (html == "senate.html") {
+//      var jsonurl = "pro-congress-113-senate.json";
+//  }
+
+
+// Christoph's solution: data attributes
+
+var chamber = $("body").data("chamber"); 
+var jsonurl = "pro-congress-113-" + chamber + ".json"
+
+
+if (typeof chamber !== 'undefined') {  // to avoid error in home.html
 $.getJSON(jsonurl, function(data) {
     console.log(data)
 
@@ -25,12 +43,15 @@ $.getJSON(jsonurl, function(data) {
 
         var content = "<tr>"
 
-        content += "<td>" + "<a href='" + url + "'>" + name + "</a>" + "</td><td>" + member.party +
-            "</td><td>" + state + "</td><td>" + seniority + "</td><td>" +
-            votesParty + "</td></tr>";
+        content += "<td>" + "<a href='" + url + "'>" + name + "</a>"
+        content += "<td>" + member.party;
+        content += "<td>" + state; 
+        content += "<td>" + seniority; 
+        content += "<td>" + votesParty;
 
 
         $('.congressData').append(content);
     }
 
 });
+}
