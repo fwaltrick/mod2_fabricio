@@ -1,11 +1,14 @@
+//HOME
 
-//Fuction to change the button of the accordion in the homepage
-$(".readMore").click(function(){
-     $(this).text(function(index, currentText) {
-         return currentText === 'Read Less' ? 'Read More' : 'Read Less';
-     });
+//Function to change the button of the accordion in the homepage
+$(".readMore").click(function() {
+    $(this).text(function(index, currentText) {
+        return currentText === 'Read Less' ? 'Read More' : 'Read Less';
+    });
 });
 
+
+// SENATE/HOUSE
 // My first solution: determining the chamber by the HTML file
 //
 // var html = location.pathname.split("/").slice(-1)
@@ -17,41 +20,125 @@ $(".readMore").click(function(){
 //  }
 
 
-// Christoph's solution: data attributes
 
-var chamber = $("body").data("chamber"); 
-var jsonurl = "pro-congress-113-" + chamber + ".json"
+// var chamber = $("body").data("chamber"); // get senate or house
+// var jsonurl = "pro-congress-113-" + chamber + ".json";
 
+// if (typeof chamber !== 'undefined') { // to avoid error in home.html (where there's no chamber data)
+//     $.getJSON(jsonurl, function(data) {
+//         var members = data.results[0].members;
+//     })
+// }
 
-if (typeof chamber !== 'undefined') {  // to avoid error in home.html
-$.getJSON(jsonurl, function(data) {
-    console.log(data)
-
-    for (var i = 0; i < data.results[0].members.length; i++) {
-
-        var member = data.results[0].members[i];
-        var name = member.first_name;
-
-        if (member.middle_name) name = name + " " + member.middle_name
-        name = name + " " + member.last_name;
-
-        var url = member.url;
-        var state = member.state;
-        var seniority = member.seniority;
-        var votesParty = member.votes_with_party_pct;
+// SOLUTION Object Oriented
 
 
-        var content = "<tr>"
 
-        content += "<td>" + "<a href='" + url + "'>" + name + "</a>"
-        content += "<td>" + member.party;
-        content += "<td>" + state; 
-        content += "<td>" + seniority; 
-        content += "<td>" + votesParty;
+function DataHandler() {
+
+    this.jsonUrl = "";
+    this.chamber = "";
+    this.jsonData = "";
+    this.members = [];
+    this.states = [];
+
+    this.populateMenu = function() {
+    $.getJSON("scripts/states.json", function(response){
+        var arrayStates = [];
+        console.log(response);
+        response.forEach(function(element){
+            var opt = $("<option>").text(element.name).attr("value",element.code);
+            arrayStates.push(opt);
+        })
+        $("#filterState").append(arrayStates);
+    })
+
+}
 
 
-        $('.congressData').append(content);
+
+    this.start = function() {
+        this.chamber = $("body").data("chamber"); // get senate or house
+        this.jsonUrl = "pro-congress-113-" + this.chamber + ".json";
     }
 
-});
+    this.loadJson = function() {
+        var that = this;
+        if (typeof that.chamber !== 'undefined') { // to avoid error in home.html (where there's no chamber data)
+            $.getJSON(this.jsonUrl, function(response) {
+                that.jsonData = response;
+                that.members = that.jsonData.results[0].members;
+                that.createTable();
+            })
+        }
+
+    }
+
+    this.createTable = function() {
+        var tRows = [];
+
+        $(this.members).each(function(i,member) {
+            if (tgifFilter[member.party]) {
+                if  (!tgifFilter.activeState || tgifFilter.activeState==member.state) {
+                var tr = $("<tr>");
+                var name = [member.first_name, member.middle_name, member.last_name].join(" ").replace("  ", " ")
+                var nameUrl = "<a href='" + member.url + "'>" + name + "</a>";
+                tr.append($("<td>").append(nameUrl));
+                tr.append($("<td>").text(member.party));
+                tr.append($("<td>").text(member.state));
+                tr.append($("<td>").text(member.seniority));
+                tr.append($("<td>").text(member.votes_with_party_pct));
+                tRows.push(tr);
+            }
+        }
+        })
+        $("#membersTable tbody").append(tRows);
+    }
+
+    this.updateTable = function() {
+        $("#membersTable tbody").html("");
+        this.createTable();
+    }
 }
+
+var dataHandler = new DataHandler();
+dataHandler.start();
+dataHandler.populateMenu();
+dataHandler.loadJson();
+console.log(dataHandler);
+
+$("#filterParty input[type=checkbox]").on("change", function() {
+    console.log("new checkbox");
+    tgifFilter.updateParty($(this).val(), $(this).prop("checked"))
+})
+
+$("#filterState").on("change", function() {
+    console.log("new checkbox");
+    tgifFilter.updateState($(this).val())
+})
+
+function Filter() {
+
+    this.D = true;
+    this.R = true;
+    this.I = true;
+
+    this.activeState = "";
+
+    this.updateParty = function(party, checked) {
+        console.log("should update parties now...", party, checked)
+        this[party] = checked;
+        dataHandler.updateTable();
+
+    }
+
+    this.updateState = function(state) {
+        this.activeState = state;
+        console.log("should update states now...", state)
+        dataHandler.updateTable();
+
+    }
+
+}
+var tgifFilter = new Filter();
+console.log(tgifFilter);

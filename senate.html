@@ -30,32 +30,46 @@
     <div class="container">
         <h2>Senators</h2>
         <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-        
-        <div class="container">
-        <form name="partyFilter" id="FilterForm" action="" method=""> Filter by Party:
-    <input type="checkbox" name="filterStatus" value="R" /><label for="republican">Republican</label>
-    <input type="checkbox" name="filterStatus" value="D" /><label for="democrat">Democrat</label>
-    <input type="checkbox" name="filterStatus" value="I" /><label for="independent">Independent</label>
-        </form>
-        
+        <div class="well well-sm">
+            <div id="filterParty">
+                Filter by Party:
+                <div class="checkbox-inline">
+                    <label>
+                        <input type="checkbox" value="R" checked="checked">Republican</label>
+                </div>
+                <div class="checkbox-inline">
+                    <label>
+                        <input type="checkbox" value="D" checked="checked">Democrat</label>
+                </div>
+                <div class="checkbox-inline">
+                    <label>
+                        <input type="checkbox" value="I" checked="checked">Independent </label>
+                </div>
+            </div>
+            <div>
+                Filter by State:
+                <select class="selectpicker" data-style="btn-warning" id="filterState">
+                    <option value="">All</option>
+                    
+                </select>
+            </div>
         </div>
-        <div class="container">
-            
-        
-            <table id="membersTable" class="table table-hover table-condensed">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>State</th>
-                        <th>Seniority</th>
-                        <th>Votes with the Party</th>
-                    </tr>
-                </thead>
-                <tbody class="congressData">
-                </tbody>
-            </table>
-        </div>
+    </div>
+    <div class="container">
+        <table id="membersTable" class="table table-hover table-condensed">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Name</th>
+                    <th>Party</th>
+                    <th>State</th>
+                    <th>Seniority</th>
+                    <th>Votes with the Party</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
     </div>
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
