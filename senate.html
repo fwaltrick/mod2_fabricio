@@ -9,23 +9,26 @@
 </head>
 
 <body data-chamber="senate">
-    <div class="container">
-        <a href="#"><img src="images/logoTgif.png" class="img-responsive" width ="150"></a>
-    </div>
-    <div class="container">
-        <nav class="navbar navbar-custom">
-            <ul class="nav navbar-nav">
-                <li><a href="index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Congress <span class="caret"></span></a>
-                    <ul class="dropdown-menu inverse-dropdown">
-                        <li><a href="house.html">House</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Senate</a></li>
-                    </ul>
-        </nav>
-    </div>
-    </nav>
+    <header>
+        <div class="container">
+            <a href="index.html"><img src="images/logoTgif.png" class="img-responsive" width ="150"></a>
+        </div>
+        <div class="container">
+            <nav class="navbar navbar-custom">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Congress <span class="caret"></span></a>
+                        <ul class="dropdown-menu inverse-dropdown">
+                            <li><a href="house.html">House</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Senate</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
     <!--Table container-->
     <div class="container">
         <h2>Senators</h2>
@@ -50,7 +53,6 @@
                 Filter by State:
                 <select class="selectpicker" data-style="btn-warning" id="filterState">
                     <option value="">All</option>
-                    
                 </select>
             </div>
         </div>

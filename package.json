@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "live-server": "^1.2.0",
+    "live-server": "^1.2.1",
     "npm-run-all": "^4.1.2"
   },
   "dependencies": {
-    "node-sass": "^4.7.2"
+    "node-sass": "^4.12.0"
   }
 }
